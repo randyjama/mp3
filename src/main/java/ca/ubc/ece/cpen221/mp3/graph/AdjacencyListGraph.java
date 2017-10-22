@@ -1,12 +1,9 @@
 package ca.ubc.ece.cpen221.mp3.graph;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
@@ -26,35 +23,24 @@ public class AdjacencyListGraph implements Graph {
 	@Override
 	public void addVertex(Vertex v) {
 		// TODO Auto-generated method stub
-		adjGraph.put(v, null);
+		ArrayList<Vertex> arrayEdge = new ArrayList<Vertex>();
+		adjGraph.put(v, arrayEdge);
 	}
 
 	@Override
 	public void addEdge(Vertex v1, Vertex v2) {
 		// TODO Auto-generated method stub
-		// ???need to throw v1/v2 into array list 1st? is arraylist below supposed to be
-		// an instance variable above?
-		ArrayList<Vertex> arrayEdge = new ArrayList<Vertex>();
-		arrayEdge.add(v1);
-		arrayEdge.add(v2);
-		adjGraph.put(null, arrayEdge);
+		adjGraph.get(v1).add(v2);
 	}
 
 	@Override
 	public boolean edgeExists(Vertex v1, Vertex v2) {
 		// TODO Auto-generated method stub
 		// since directional, v1 is key and v2 is value in key's list array
-
-		for (Vertex key : adjGraph.keySet()) { // iterate through all keys
-			if (key == v1) {
-				// iterate through values of arrayList for v2 match
-				for (Vertex edge : adjGraph.get(v1)) {
-					if (edge == v2) {
-						return true;
-					}
-				}
+			if (adjGraph.get(v1).contains(v2)) {
+				return true;
 			}
-		}
+
 		return false;
 	}
 
@@ -73,17 +59,12 @@ public class AdjacencyListGraph implements Graph {
 			} else if (key == v) { // match found
 				// iterate through values of key matched
 				// put arraylist into returnList and return latter
-				int i = 0;
-				for (ArrayList<Vertex> edge : adjGraph.values()) { // ???why arraylist<vertex>, is edge an arraylist or
-																	// value?
-					returnList.add(edge.get(i));
-					i++;
+				for (Vertex edge : adjGraph.get(v)) {
+					returnList.add(edge);
 				}
 
 				return returnList;
 			}
-			// ??? do I need an else statement here to handle if key =/= v, or will it just
-			// cycle back thru the loop
 		}
 		return null;
 	}
@@ -91,13 +72,27 @@ public class AdjacencyListGraph implements Graph {
 	@Override
 	public List<Vertex> getUpstreamNeighbors(Vertex v) {
 		// TODO Auto-generated method stub
-		return null;
+		//iterate through keys u to find v in corresponding value arraylist
+		List<Vertex> returnList = new ArrayList<Vertex>();
+		returnList.clear();
+		
+		for (Vertex key : adjGraph.keySet()) {
+			for (Vertex edge : adjGraph.get(key)) {
+				if (edge == v) {
+					//add key to return list
+					returnList.add(key);
+				}
+			}
+		}
+		
+		return returnList;
 	}
 
 	@Override
 	public List<Vertex> getVertices() {
 		// TODO Auto-generated method stub
-		return null;
+		List<Vertex> returnList = new ArrayList<>(adjGraph.keySet());
+		
+		return returnList;
 	}
-	// TODO: Implement this class
 }
