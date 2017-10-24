@@ -242,4 +242,84 @@ public class adjTest {
 		assertEquals(2, Algorithms.shortestDistance(graph, v7, v5));
 	}
 	
+	@Test
+	public void diameterTest() throws IOException {
+		Vertex v1 = new Vertex("1");
+		Vertex v2 = new Vertex("2");
+		Vertex v3 = new Vertex("3");
+		Vertex v4 = new Vertex("4");
+		Vertex v5 = new Vertex("5");
+		Vertex v6 = new Vertex("6");
+		Vertex v7 = new Vertex("7");
+		Vertex v8 = new Vertex("8");
+
+		
+		Graph graph = new AdjacencyListGraph();
+		
+		graph.addVertex(v1);
+		graph.addVertex(v2);
+		graph.addVertex(v3);
+		graph.addVertex(v4);
+		graph.addVertex(v5);
+		graph.addVertex(v6);
+		graph.addVertex(v7);
+		graph.addVertex(v8);
+
+		graph.addEdge(v1, v4);
+		graph.addEdge(v1, v2);
+		graph.addEdge(v2, v1);
+		graph.addEdge(v2, v4);
+		graph.addEdge(v4, v5);
+		graph.addEdge(v2, v3);
+		graph.addEdge(v2, v6);
+		graph.addEdge(v6, v2);
+		graph.addEdge(v4, v7);
+		graph.addEdge(v7, v4);
+		graph.addEdge(v7, v8);
+		
+		assertEquals(4, Algorithms.diameter(graph));
+		assertFalse(Algorithms.diameter(graph) == 3);
+	}
+	
+	@Test
+	public void centerTest() throws IOException {
+		Vertex v1 = new Vertex("1");
+		Vertex v2 = new Vertex("2");
+		Vertex v3 = new Vertex("3");
+		Vertex v4 = new Vertex("4");
+		Vertex v5 = new Vertex("5");
+		Vertex v6 = new Vertex("6");
+		Vertex v7 = new Vertex("7");
+		Vertex v8 = new Vertex("8");
+
+		
+		Graph graph = new AdjacencyListGraph();
+		
+		graph.addVertex(v1);
+		graph.addVertex(v2);
+		graph.addVertex(v3);
+		graph.addVertex(v4);
+		graph.addVertex(v5);
+		graph.addVertex(v6);
+		graph.addVertex(v7);
+		graph.addVertex(v8);
+
+		graph.addEdge(v1, v4);
+		graph.addEdge(v1, v2);
+		graph.addEdge(v2, v1);
+		graph.addEdge(v2, v4);
+		graph.addEdge(v4, v5);
+		graph.addEdge(v2, v3);
+		graph.addEdge(v2, v6);
+		graph.addEdge(v6, v2);
+		graph.addEdge(v4, v7);
+		graph.addEdge(v7, v4);
+		graph.addEdge(v7, v8);
+		
+		//Vertex result = Algorithms.center(graph);
+		
+		//either v4 or v5 work for this graph center
+		assertTrue(Algorithms.center(graph).equals(v4) || Algorithms.center(graph).equals(v7));
+	}
+	
 }

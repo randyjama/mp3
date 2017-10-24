@@ -121,7 +121,7 @@ public class Algorithms {
 			resultBFS.add(addingList);
 		}
 
-		return resultBFS; // this should be changed
+		return resultBFS;
 
 	}
 
@@ -178,20 +178,73 @@ public class Algorithms {
 	}
 
 	/**
-	 * You should write the spec for this method
+	 * Finds the center of the graph, which is defined as the distance between 2
+	 * vertices of minimum eccentricity. Eccentricity of a vertex b is the maximum
+	 * "shortest distance" between it and any other vertex c in a graph.
+	 * 
+	 * @param graph
+	 *            must be a correct implementation of the graph interface
+	 * @return a vertex corresponding to the center of the graph
 	 */
 	public static Vertex center(Graph graph) {
 		// TODO: Implement this method
-		return null; // this should be changed
+
+		List<Vertex> vList = graph.getVertices();
+		int eccentricity = -1;
+		//center must be sufficiently large to begin, so initialize it to diameter
+		//to be sure that the initialization may not be the final result
+		int center = Algorithms.diameter(graph);
+		Vertex result = null;
+		
+		for (Vertex vertex : vList) {
+			// get eccentricity for a given vertex, reset value per vertex cycle
+			eccentricity = -1;
+			for (int i = 0; i < vList.size(); i++) {
+				if (eccentricity < Algorithms.shortestDistance(graph, vertex, vList.get(i))) {
+					eccentricity = Algorithms.shortestDistance(graph, vertex, vList.get(i));
+				}
+			}
+			// replace center with the shorter ecc if found
+			if (center > eccentricity && eccentricity != 0) {
+				center = eccentricity;
+				result = vertex;
+			}
+			
+		}
+
+		return result; // this should be changed
 	}
 
 	/**
-	 * You should write the spec for this method
+	 * Returns the diameter of the graph, which is defined as the largest value of
+	 * the distances between all combinations of vertices in the graph. If the no
+	 * path exists between a given pair of vertices, that distance is given -1
+	 * (infinity)
+	 * 
+	 * @param graph
+	 *            must be a correct implementation of the graph interface
+	 * @return an integer corresponding to the diameter of the graph
 	 */
 	public static int diameter(Graph graph) {
 		// TODO: Implement this method
-		
-		return -1; // this should be changed
+
+		List<Vertex> vList = new ArrayList<Vertex>();
+		vList.addAll(graph.getVertices());
+		int result = -1;
+
+		// iterate through all combos of a and b, and retrieve largest shortestDistance
+		// between them
+		// return the result (greatest shortestDistance)
+		for (Vertex vertex : vList) {
+			for (int i = 0; i < vList.size(); i++) {
+				int distance = Algorithms.shortestDistance(graph, vertex, vList.get(i));
+				if (distance > result) {
+					result = distance;
+				}
+			}
+		}
+
+		return result; // this should be changed
 	}
 
 	/**
