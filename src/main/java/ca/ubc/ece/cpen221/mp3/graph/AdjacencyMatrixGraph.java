@@ -1,4 +1,5 @@
 package ca.ubc.ece.cpen221.mp3.graph;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,32 +10,43 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
 public class AdjacencyMatrixGraph implements Graph {
 	// TODO: Implement this class
-	
+
 	private int[][] adjMatrix;
 	private List<Vertex> vertList;
-	
+
+	// Rep Invariant:
+	// 2D int array must be square for this directed graph. Values of a vertex pair
+	// are either 0 or 1.
+	// List of vertices must be finite and contain all vertices in the graph.
+	//
+	// Abstraction Function:
+	// Represents a graph in 2D space where a, where an edge foe an
+	// ordered pair for vertices a to b exists if the int array returns 1.
 	/**
 	 * Constructor that builds an arrayList and a 2x2 int matrix
 	 * 
-	 * @param arraySize Input number of vertices, must be >0
+	 * @param arraySize
+	 *            Input number of vertices, must be >0
 	 */
-	public AdjacencyMatrixGraph(int numVertices){
+	public AdjacencyMatrixGraph(int numVertices) {
 		vertList = new ArrayList<Vertex>(numVertices);
 		adjMatrix = new int[numVertices][numVertices];
-		//initialize all edges of adjMatrix to 0
-		for (int i = 0; i < vertList.size()+1; i++) {
+		// initialize all edges of adjMatrix to 0
+		for (int i = 0; i < vertList.size() + 1; i++) {
 			adjMatrix[i][i] = 0;
 		}
-	}	
-	
+	}
+
 	/**
 	 * Adds vertex to row and col of matrix
-	 * @param v must not have already been added before
+	 * 
+	 * @param v
+	 *            must not have already been added before
 	 */
 	@Override
 	public void addVertex(Vertex v) {
 		// TODO Auto-generated method stub
-		vertList.add(v);	
+		vertList.add(v);
 	}
 
 	@Override
@@ -51,8 +63,7 @@ public class AdjacencyMatrixGraph implements Graph {
 		// TODO Auto-generated method stub
 		if (adjMatrix[vertList.indexOf(v1)][vertList.indexOf(v2)] == 1) {
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}

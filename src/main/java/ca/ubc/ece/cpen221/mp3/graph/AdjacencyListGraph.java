@@ -11,6 +11,11 @@ import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 public class AdjacencyListGraph implements Graph {
 
 	private Map<Vertex, ArrayList<Vertex>> adjGraph;
+	// Rep Invariant:
+	// Map contains a finite number of vertices, each with one array list of vertices.
+	//
+	// Abstraction Function:
+	// Represents a graph in 2D space where a given vertex may or may not have edges.
 
 	// constructor of hashmap
 	public AdjacencyListGraph() {
@@ -34,9 +39,9 @@ public class AdjacencyListGraph implements Graph {
 	public boolean edgeExists(Vertex v1, Vertex v2) {
 		// TODO Auto-generated method stub
 		// since directional, v1 is key and v2 is value in key's list array
-			if (adjGraph.get(v1).contains(v2)) {
-				return true;
-			}
+		if (adjGraph.get(v1).contains(v2)) {
+			return true;
+		}
 
 		return false;
 	}
@@ -69,19 +74,19 @@ public class AdjacencyListGraph implements Graph {
 	@Override
 	public List<Vertex> getUpstreamNeighbors(Vertex v) {
 		// TODO Auto-generated method stub
-		//iterate through keys u to find v in corresponding value arraylist
+		// iterate through keys u to find v in corresponding value arraylist
 		List<Vertex> returnList = new ArrayList<Vertex>();
 		returnList.clear();
-		
+
 		for (Vertex key : adjGraph.keySet()) {
 			for (Vertex edge : adjGraph.get(key)) {
 				if (edge == v) {
-					//add key to return list
+					// add key to return list
 					returnList.add(key);
 				}
 			}
 		}
-		
+
 		return returnList;
 	}
 
@@ -89,7 +94,7 @@ public class AdjacencyListGraph implements Graph {
 	public List<Vertex> getVertices() {
 		// TODO Auto-generated method stub
 		List<Vertex> returnList = new ArrayList<>(adjGraph.keySet());
-		
+
 		return returnList;
 	}
 }
