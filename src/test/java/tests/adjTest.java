@@ -210,9 +210,8 @@ public class adjTest {
 		Vertex v7 = new Vertex("7");
 		Vertex v8 = new Vertex("8");
 
-		
 		Graph graph = new AdjacencyListGraph();
-		
+
 		graph.addVertex(v1);
 		graph.addVertex(v2);
 		graph.addVertex(v3);
@@ -233,7 +232,7 @@ public class adjTest {
 		graph.addEdge(v4, v7);
 		graph.addEdge(v7, v4);
 		graph.addEdge(v7, v8);
-		
+
 		assertEquals(2, Algorithms.shortestDistance(graph, v1, v3));
 		assertEquals(3, Algorithms.shortestDistance(graph, v1, v8));
 		assertFalse(Algorithms.shortestDistance(graph, v6, v8) == 2);
@@ -241,7 +240,7 @@ public class adjTest {
 		assertFalse(Algorithms.shortestDistance(graph, v5, v6) == 3);
 		assertEquals(2, Algorithms.shortestDistance(graph, v7, v5));
 	}
-	
+
 	@Test
 	public void diameterTest() throws IOException {
 		Vertex v1 = new Vertex("1");
@@ -253,9 +252,8 @@ public class adjTest {
 		Vertex v7 = new Vertex("7");
 		Vertex v8 = new Vertex("8");
 
-		
 		Graph graph = new AdjacencyListGraph();
-		
+
 		graph.addVertex(v1);
 		graph.addVertex(v2);
 		graph.addVertex(v3);
@@ -276,11 +274,11 @@ public class adjTest {
 		graph.addEdge(v4, v7);
 		graph.addEdge(v7, v4);
 		graph.addEdge(v7, v8);
-		
+
 		assertEquals(4, Algorithms.diameter(graph));
 		assertFalse(Algorithms.diameter(graph) == 3);
 	}
-	
+
 	@Test
 	public void centerTest() throws IOException {
 		Vertex v1 = new Vertex("1");
@@ -292,9 +290,8 @@ public class adjTest {
 		Vertex v7 = new Vertex("7");
 		Vertex v8 = new Vertex("8");
 
-		
 		Graph graph = new AdjacencyListGraph();
-		
+
 		graph.addVertex(v1);
 		graph.addVertex(v2);
 		graph.addVertex(v3);
@@ -315,11 +312,116 @@ public class adjTest {
 		graph.addEdge(v4, v7);
 		graph.addEdge(v7, v4);
 		graph.addEdge(v7, v8);
-		
-		//Vertex result = Algorithms.center(graph);
-		
-		//either v4 or v5 work for this graph center
+
+		// either v4 or v5 work for this graph center
 		assertTrue(Algorithms.center(graph).equals(v4) || Algorithms.center(graph).equals(v7));
 	}
-	
+
+	@Test
+	public void commonUpstreamVertices() throws IOException {
+		Vertex v1 = new Vertex("1");
+		Vertex v2 = new Vertex("2");
+		Vertex v3 = new Vertex("3");
+		Vertex v4 = new Vertex("4");
+		Vertex v5 = new Vertex("5");
+		Vertex v6 = new Vertex("6");
+		Vertex v7 = new Vertex("7");
+		Vertex v8 = new Vertex("8");
+		Vertex v9 = new Vertex("9");
+
+		Graph graph = new AdjacencyListGraph();
+		
+		// check if empty list returned
+		assert (Algorithms.commonUpstreamVertices(graph, v3, v9).isEmpty());
+		assertFalse(!Algorithms.commonUpstreamVertices(graph, v1, v2).isEmpty());
+
+		graph.addVertex(v1);
+		graph.addVertex(v2);
+		graph.addVertex(v3);
+		graph.addVertex(v4);
+		graph.addVertex(v5);
+		graph.addVertex(v6);
+		graph.addVertex(v7);
+		graph.addVertex(v8);
+		graph.addVertex(v9);
+
+		graph.addEdge(v1, v3);
+		graph.addEdge(v3, v1);
+		graph.addEdge(v1, v4);
+		graph.addEdge(v4, v1);
+		graph.addEdge(v4, v2);
+		graph.addEdge(v3, v2);
+		graph.addEdge(v2, v9);
+		graph.addEdge(v9, v2);
+		graph.addEdge(v9, v6);
+		graph.addEdge(v5, v2);
+		graph.addEdge(v5, v6);
+		graph.addEdge(v5, v7);
+		graph.addEdge(v7, v5);
+		graph.addEdge(v8, v7);
+
+		assert (Algorithms.commonUpstreamVertices(graph, v3, v4).contains(v1));
+		assertFalse(Algorithms.commonUpstreamVertices(graph, v3, v4).contains(v2));
+
+		assert (Algorithms.commonUpstreamVertices(graph, v2, v6).contains(v5)
+				&& Algorithms.commonUpstreamVertices(graph, v2, v6).contains(v9));
+		assertFalse(Algorithms.commonUpstreamVertices(graph, v2, v6).contains(v2)
+				&& Algorithms.commonUpstreamVertices(graph, v2, v6).contains(v6));
+	}
+
+	@Test
+	public void commonDownstreamVertices() throws IOException {
+		Vertex v1 = new Vertex("1");
+		Vertex v2 = new Vertex("2");
+		Vertex v3 = new Vertex("3");
+		Vertex v4 = new Vertex("4");
+		Vertex v5 = new Vertex("5");
+		Vertex v6 = new Vertex("6");
+		Vertex v7 = new Vertex("7");
+		Vertex v8 = new Vertex("8");
+		Vertex v9 = new Vertex("9");
+
+		Graph graph = new AdjacencyListGraph();
+		
+		// check if empty list returned
+		assert (Algorithms.commonDownstreamVertices(graph, v3, v9).isEmpty());
+		assertFalse(!Algorithms.commonDownstreamVertices(graph, v1, v2).isEmpty());
+
+		graph.addVertex(v1);
+		graph.addVertex(v2);
+		graph.addVertex(v3);
+		graph.addVertex(v4);
+		graph.addVertex(v5);
+		graph.addVertex(v6);
+		graph.addVertex(v7);
+		graph.addVertex(v8);
+		graph.addVertex(v9);
+
+		graph.addEdge(v1, v3);
+		graph.addEdge(v3, v1);
+		graph.addEdge(v1, v4);
+		graph.addEdge(v4, v1);
+		graph.addEdge(v4, v2);
+		graph.addEdge(v3, v2);
+		graph.addEdge(v2, v9);
+		graph.addEdge(v9, v2);
+		graph.addEdge(v9, v6);
+		graph.addEdge(v5, v2);
+		graph.addEdge(v5, v6);
+		graph.addEdge(v5, v7);
+		graph.addEdge(v7, v5);
+		graph.addEdge(v8, v7);
+
+		assert (Algorithms.commonDownstreamVertices(graph, v5, v8).contains(v7));
+		assertFalse(Algorithms.commonDownstreamVertices(graph, v5, v8).contains(v1));
+
+		assert (Algorithms.commonDownstreamVertices(graph, v3, v9).contains(v2));
+		assertFalse(Algorithms.commonDownstreamVertices(graph, v3, v9).contains(v5));
+
+		assert (Algorithms.commonDownstreamVertices(graph, v9, v5).contains(v2)
+				&& Algorithms.commonDownstreamVertices(graph, v9, v5).contains(v6));
+		assertFalse(Algorithms.commonDownstreamVertices(graph, v9, v5).contains(v8)
+				&& Algorithms.commonDownstreamVertices(graph, v9, v5).contains(v1));
+	}
+
 }

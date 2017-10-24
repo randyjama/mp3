@@ -21,17 +21,18 @@ public class Algorithms {
 	 */
 
 	/**
-	 * This is provided as an example to indicate that this method and other methods
-	 * should be implemented here.
-	 *
-	 * You should write the specs for this and all other methods.
+	 * Find the shortest distance between two vertices in an unweighted graph. The
+	 * shortest distance is defined as the minimum number of edges it takes to get
+	 * from vertex a to vertex b. The distance is 0 if a = b.
 	 *
 	 * @param graph
+	 *            must be a correct implementation of the grpah interface
 	 * @param a
 	 *            Vertex must exist within the graph
 	 * @param b
 	 *            Vertex must exist within the graph
-	 * @return
+	 * @return an integer representing the shortest path between the 2 vertices
+	 *         given. Distance is 0 for a=b.
 	 */
 	public static int shortestDistance(Graph graph, Vertex a, Vertex b) {
 		// TODO: Implement this method and others
@@ -84,8 +85,10 @@ public class Algorithms {
 	 * starting a DFS at a specific vertex of the graph (the number of elements in
 	 * the returned set should correspond to the number of graph vertices).
 	 *
-	 * @param
-	 * @return
+	 * @param graph
+	 *            must be a correct implementation of the graph interface
+	 * @return a set of array lists of vertices where each element is the result
+	 *         from the depth first search of each vertex of the graph
 	 */
 	public static Set<List<Vertex>> depthFirstSearch(Graph graph) {
 		// TODO: Implement this method
@@ -133,8 +136,9 @@ public class Algorithms {
 	 * the returned set should correspond to the number of graph vertices).
 	 *
 	 * @param graph
-	 *            must have correct implementation of graph interface
-	 * @return set's # elements = # vertices
+	 *            must be a correct implementation of the graph interface
+	 * @return a set of array lists of vertices where each element is the result
+	 *         from the breadth first search of each vertex of the graph
 	 */
 	public static Set<List<Vertex>> breadthFirstSearch(Graph graph) {
 		// TODO: Implement this method
@@ -191,11 +195,11 @@ public class Algorithms {
 
 		List<Vertex> vList = graph.getVertices();
 		int eccentricity = -1;
-		//center must be sufficiently large to begin, so initialize it to diameter
-		//to be sure that the initialization may not be the final result
+		// center must be sufficiently large to begin, so initialize it to diameter
+		// to be sure that the initialization may not be the final result
 		int center = Algorithms.diameter(graph);
 		Vertex result = null;
-		
+
 		for (Vertex vertex : vList) {
 			// get eccentricity for a given vertex, reset value per vertex cycle
 			eccentricity = -1;
@@ -209,7 +213,7 @@ public class Algorithms {
 				center = eccentricity;
 				result = vertex;
 			}
-			
+
 		}
 
 		return result; // this should be changed
@@ -248,19 +252,60 @@ public class Algorithms {
 	}
 
 	/**
-	 * You should write the spec for this method
+	 * Takes a graph and 2 vertices a and b, then returns a list of vertices such
+	 * that each vertex in the list has an edge to both a and b. If no such vertices
+	 * exist, an empty list is returned.
+	 * 
+	 * @param graph
+	 *            must be a correct implementation of Graph interface
+	 * @param a
+	 *            must be a unique vertex of graph.
+	 * @param b
+	 *            must be a unique vertex of graph
+	 * @return a list of vertices that contain an edge to both a and b. If no such
+	 *         vertices exist, return empty list
 	 */
 	public static List<Vertex> commonUpstreamVertices(Graph graph, Vertex a, Vertex b) {
 		// TODO: Implement this method
-		return null; // this should be changed
+
+		List<Vertex> vList = graph.getVertices(); // holds all vertices
+		List<Vertex> resultList = new ArrayList<Vertex>();
+
+		for (Vertex vertex : vList) {
+			if (graph.edgeExists(vertex, a) && graph.edgeExists(vertex, b)) {
+				resultList.add(vertex);
+			}
+		}
+
+		return resultList;
 	}
 
 	/**
-	 * You should write the spec for this method
+	 * Takes a graph and 2 vertices a and b, then returns a list of vertices such
+	 * that each vertex in the list has an edge from both a and b to itself.
+	 * 
+	 * @param graph
+	 *            must be a correct implementation of Graph interface
+	 * @param a
+	 *            must be a unique vertex of graph.
+	 * @param b
+	 *            must be a unique vertex of graph
+	 * @return a list of vertices that contain an edge from both a and b. If no such
+	 *         vertices exist, return empty list
 	 */
 	public static List<Vertex> commonDownstreamVertices(Graph graph, Vertex a, Vertex b) {
 		// TODO: Implement this method
-		return null; // this should be changed
+
+		List<Vertex> vList = graph.getVertices(); // holds all vertices
+		List<Vertex> resultList = new ArrayList<Vertex>();
+
+		for (Vertex vertex : vList) {
+			if (graph.edgeExists(a, vertex) && graph.edgeExists(b, vertex)) {
+				resultList.add(vertex);
+			}
+		}
+
+		return resultList;
 	}
 
 }

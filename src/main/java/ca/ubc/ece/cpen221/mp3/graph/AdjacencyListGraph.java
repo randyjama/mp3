@@ -8,9 +8,6 @@ import java.util.Map;
 import ca.ubc.ece.cpen221.mp3.staff.Graph;
 import ca.ubc.ece.cpen221.mp3.staff.Vertex;
 
-//must internally represent the graph as an adjacency list
-//use hash table to link each vertex of graph with array of adjacent vertices
-//???Why use array list instead of just list, since downstream demands we return an actual list, not array list?
 public class AdjacencyListGraph implements Graph {
 
 	private Map<Vertex, ArrayList<Vertex>> adjGraph;
